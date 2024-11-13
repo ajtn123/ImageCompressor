@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ImageCompressor.ViewModels"
+        xmlns:v="using:ImageCompressor.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ImageCompressor.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ImageCompressor">
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <Grid ColumnDefinitions="*" RowDefinitions="auto,*,auto">
+        <TextBox Text="{Binding Path}" x:Name="PathEntry">
+            <TextBox.InnerRightContent>
+				<StackPanel Orientation="Horizontal">
+					<Button Content="➡️" Command="{Binding SearchCmd}"/>
+					<Button Content="📁" x:Name="OpenButton"/>
+					<Button Content="⚙️" Command="{Binding ConfigCmd}"/>
+				</StackPanel>
+            </TextBox.InnerRightContent>
+        </TextBox>
+		<ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding FolderVMs}" Margin="0,0,4,0">
+                <ItemsControl.DataTemplates>
+                    <DataTemplate DataType="vm:FolderVM">
+                        <v:FolderView/>
+                    </DataTemplate>
+				</ItemsControl.DataTemplates>
+            </ItemsControl>
+		</ScrollViewer>
+		<Panel Grid.Row="2">
+			<Separator VerticalAlignment="Top" Margin="0"/>
+			<TextBlock Text="{Binding Status}"/>
+			<ProgressBar VerticalAlignment="Bottom" IsVisible="{Binding IsWorking}" IsIndeterminate="True"/>
+		</Panel>
+    </Grid>
+</Window>

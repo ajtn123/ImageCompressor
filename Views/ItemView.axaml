@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:vm="using:ImageCompressor.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ImageCompressor.Views.ItemView"
+			 x:DataType="vm:ItemVM">
+	<Panel>
+		<TextBlock Text="{Binding Name}"/>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button IsEnabled="{Binding !IsCompressing}" 
+					IsVisible="{Binding IsImage}" 
+					Content="📄" Padding="0"
+					Command="{Binding Compress}"/>
+			<Button IsEnabled="{Binding !IsOptimizing}" 
+					IsVisible="{Binding IsOptimizable}" 
+					Content="🏞️" Padding="0"
+					Command="{Binding Optimize}"/>
+		</StackPanel>
+	</Panel>
+</UserControl>

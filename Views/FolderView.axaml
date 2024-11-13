@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ImageCompressor.ViewModels"
+             xmlns:v="using:ImageCompressor.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ImageCompressor.Views.FolderView"
+             x:DataType="vm:FolderVM">
+	<Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Margin="3">
+    <StackPanel>
+		<Panel>
+			<TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+			<Button Padding="0" HorizontalAlignment="Right" Content="{Binding ExpanderContent}" Command="{Binding SwitchItem}"/>
+		</Panel>
+		<Separator Margin="0" IsVisible="{Binding IsExpanded}"/>
+        <ItemsControl ItemsSource="{Binding ItemVMs}" IsVisible="{Binding IsExpanded}">
+            <ItemsControl.DataTemplates>
+                <DataTemplate DataType="vm:ItemVM">
+                    <v:ItemView/>
+                </DataTemplate>
+            </ItemsControl.DataTemplates>
+        </ItemsControl>
+		<ItemsControl ItemsSource="{Binding SubFolders}" IsVisible="{Binding IsExpanded}">
+			<ItemsControl.DataTemplates>
+				<DataTemplate DataType="vm:FolderVM">
+					<v:FolderView/>
+				</DataTemplate>
+			</ItemsControl.DataTemplates>
+		</ItemsControl>
+    </StackPanel>
+	</Border>
+	<!--<Expander IsExpanded="{Binding IsExpanded}">
+		<Expander.Header>
+			<TextBlock Text="{Binding Name}"/>
+		</Expander.Header>
+		<StackPanel>
+		<ItemsControl ItemsSource="{Binding ItemVMs}">
+			<ItemsControl.DataTemplates>
+				<DataTemplate DataType="vm:ItemVM">
+					<v:ItemView/>
+				</DataTemplate>
+			</ItemsControl.DataTemplates>
+		</ItemsControl>
+		<ItemsControl ItemsSource="{Binding SubFolders}">
+			<ItemsControl.DataTemplates>
+				<DataTemplate DataType="vm:FolderVM">
+					<v:FolderView/>
+				</DataTemplate>
+			</ItemsControl.DataTemplates>
+		</ItemsControl>
+	</StackPanel>
+	</Expander>-->
+</UserControl>
