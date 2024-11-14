@@ -48,7 +48,7 @@ public class ItemVM : ViewModelBase
             image.Write(stream);
             if (stream.Length <= file.Length)
             {
-                using var fileStream = File.Create(file.FullName.Replace(file.Extension, $".magick.avif"));
+                using var fileStream = File.Create(file.FullName.Replace(file.Extension, $".magick.{MWVM.Config.Format.ToString()}"));
                 stream.Seek(0, SeekOrigin.Begin);
                 stream.CopyTo(fileStream);
                 MWVM.WorkEnd(file, ActionType.Compression, true);
@@ -75,7 +75,7 @@ public class ItemVM : ViewModelBase
 }
 public static class Ext
 {
-    public static readonly string[] ImageExts = [".png", ".jpg", ".jpeg", ".ico", ".icon", ".gif", ".tif", ".tiff", ".webp", ".heic", ".heif", ".avi", ".avif"];
+    public static readonly string[] ImageExts = [".png", ".jpg", ".jpeg", ".ico", ".icon", ".gif", ".tif", ".tiff", ".webp", ".heic", ".heif", ".avif"];
     public static readonly string[] OptimizableExts = [".png", ".jpg", ".jpeg", ".ico", ".icon", ".gif"];
 }
 public enum ActionType
