@@ -1,5 +1,3 @@
-using Avalonia.Controls;
-using Avalonia.Media;
 using Avalonia.ReactiveUI;
 using ImageCompressor.ViewModels;
 using ImageMagick;
@@ -14,5 +12,6 @@ public partial class ConfigWindow : ReactiveWindow<ConfigVM>
         InitializeComponent();
         this.WhenActivated(a => ViewModel!.ApplyCmd.Subscribe(Close));
         FormatButton.ItemsSource = Enum.GetValues(typeof(MagickFormat)).Cast<MagickFormat>();
+        ActionTypeButton.ItemsSource = Enum.GetValues(typeof(ActionType)).Cast<ActionType>();
     }
 }

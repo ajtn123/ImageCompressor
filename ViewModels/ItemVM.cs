@@ -46,7 +46,7 @@ public class ItemVM : ViewModelBase
             image.Format = MWVM.Config.Format;
             image.Quality = MWVM.Config.Quality;
             image.Write(stream);
-            if (stream.Length <= file.Length)
+            if (MWVM.Config.AlwaysSave || stream.Length < file.Length)
             {
                 using var fileStream = File.Create(file.FullName.Replace(file.Extension, $".magick.{MWVM.Config.Format.ToString().ToLower()}"));
                 stream.Seek(0, SeekOrigin.Begin);
@@ -69,13 +69,13 @@ public class ItemVM : ViewModelBase
         {
             bool result = optimizer.LosslessCompress(file);
             IsOptimizing = false;
-            MWVM.WorkEnd(file, ActionType.Compression, result);
+            MWVM.WorkEnd(file, ActionType.Optimization, result);
         });
     }
 }
 public static class Ext
 {
-    public static readonly string[] ImageExts = Enum.GetValues(typeof(MagickFormat)).Cast<MagickFormat>().Select((a,b) =>{ return a.ToString().ToLower(); }).ToArray();//[".png", ".jpg", ".jpeg", ".ico", ".gif", ".tif", ".tiff", ".webp", ".heic", ".heif", ".avif"];
+    public static readonly string[] ImageExts = Enum.GetValues(typeof(MagickFormat)).Cast<MagickFormat>().Select((a, b) => { return a.ToString().ToLower(); }).ToArray();//[".png", ".jpg", ".jpeg", ".ico", ".gif", ".tif", ".tiff", ".webp", ".heic", ".heif", ".avif"];
     public static readonly string[] OptimizableExts = ["png", "jpg", "jpeg", "ico", "gif"];
 }
 public enum ActionType

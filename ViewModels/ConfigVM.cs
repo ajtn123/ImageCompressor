@@ -5,26 +5,30 @@ using System;
 using System.IO;
 using System.Reactive;
 using System.Text.Json;
-using System.Windows.Input;
 namespace ImageCompressor.ViewModels;
 public class ConfigVM : ViewModelBase
 {
 
     private uint quality;
     private MagickFormat format;
+    private ActionType actionType;
+    private bool alwaysSave;
 
     public ConfigVM(Config config)
     {
         quality = config.Quality;
         format = config.Format;
+        actionType = config.ActtionType;
+        alwaysSave = config.AlwaysSave;
         ApplyCmd = ReactiveCommand.Create(() =>
         {
-            var config = new Config { Quality = Quality, Format = Format };
+            var config = new Config { Quality = Quality, Format = Format, ActtionType = ActionType, AlwaysSave = AlwaysSave };
             ConfigProvider.SaveConfig(config);
             return config;
         });
     }
-
+    public ActionType ActionType { get => actionType; set => this.RaiseAndSetIfChanged(ref actionType, value); }
+    public bool AlwaysSave { get => alwaysSave; set => this.RaiseAndSetIfChanged(ref alwaysSave, value); }
     public uint Quality
     {
         get => quality; set
@@ -36,13 +40,7 @@ public class ConfigVM : ViewModelBase
             this.RaiseAndSetIfChanged(ref quality, value);
         }
     }
-    public MagickFormat Format
-    {
-        get => format; set
-        {
-            this.RaiseAndSetIfChanged(ref format, value);
-        }
-    }
+    public MagickFormat Format { get => format; set => this.RaiseAndSetIfChanged(ref format, value); }
     public ReactiveCommand<Unit, Config> ApplyCmd { get; set; }
 }
 public static class ConfigProvider

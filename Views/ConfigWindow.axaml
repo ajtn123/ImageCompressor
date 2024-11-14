@@ -7,11 +7,15 @@
         Title="ConfigWindow"
 		xmlns:vm="using:ImageCompressor.ViewModels"
 		x:DataType="vm:ConfigVM">
-	<Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,*">
+	<Grid RowDefinitions="auto,auto,auto,auto,auto" ColumnDefinitions="auto,*">
 		<TextBlock Text="Format"/>
 	    <ComboBox Width="100" Grid.Column="1" x:Name="FormatButton" SelectedItem="{Binding Format}"/>
 		<TextBlock Grid.Row="1" Text="Quality"/>
 		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Quality}"/>
-		<Button Grid.Row="2" Grid.Column="1" Content="Apply" Command="{Binding ApplyCmd}"/>
+		<TextBlock Grid.Row="2" Text="Default Commandline Action Type"/>
+		<ComboBox Width="300" Grid.Row="2" Grid.Column="1" x:Name="ActionTypeButton" SelectedItem="{Binding ActionType}"/>
+		<TextBlock Grid.Row="3" Text="Always Save Compression Result"/>
+		<CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding AlwaysSave}"/>
+		<Button Grid.Row="4" Grid.Column="1" Content="Apply" Command="{Binding ApplyCmd}"/>
 	</Grid>
 </Window>
