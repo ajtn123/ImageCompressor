@@ -13,8 +13,7 @@ internal sealed class Program
         if (args.Length == 1)
         {
             var file = new FileInfo(args[0]);
-            string[] ImageExts = [".png", ".jpg", ".jpeg", ".ico", ".icon", ".gif"];
-            if (!ImageExts.Contains(file.Extension.ToLower())) return;
+            if (!ViewModels.Ext.OptimizableExts.Contains(file.Extension.ToLower().TrimStart('.'))) return;
             var optimizer = new ImageOptimizer();
             optimizer.LosslessCompress(file);
         }
